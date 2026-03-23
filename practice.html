@@ -86,6 +86,8 @@
     let currentNumber = null;
     let currentMin = null;
     let currentMax = null;
+    const RECENT_HISTORY_SIZE = 8;
+    let recentNumbers = [];
     let scoreCorrect = 0;
     let scoreIncorrect = 0;
 
@@ -107,6 +109,7 @@
 
       currentMin = parseInt(btn.dataset.min);
       currentMax = parseInt(btn.dataset.max);
+      recentNumbers = [];
 
       // Show the flash card area
       document.getElementById('flashcard-area').style.display = 'block';
@@ -120,7 +123,16 @@
     }
 
     function nextCard() {
-      currentNumber = getRandomNumber(currentMin, currentMax);
+      const rangeSize = currentMax - currentMin + 1;
+      const excludeCount = Math.min(RECENT_HISTORY_SIZE, rangeSize - 1);
+      const excluded = recentNumbers.slice(-excludeCount);
+      let candidate;
+      do {
+        candidate = getRandomNumber(currentMin, currentMax);
+      } while (excluded.includes(candidate));
+      currentNumber = candidate;
+      recentNumbers.push(currentNumber);
+      if (recentNumbers.length > RECENT_HISTORY_SIZE) recentNumbers.shift();
       document.getElementById('dutch-word').textContent = getDutchWord(currentNumber);
       clearFeedback();
       const input = document.getElementById('answer-input');
