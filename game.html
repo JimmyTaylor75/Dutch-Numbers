@@ -298,10 +298,11 @@
         input.value = '';
         if (strikes >= 3) {
           inputLocked = true;
+          feedbackEl.innerHTML = 'Onjuist &mdash; the answer was <strong>' + currentNumber + '</strong>';
           setTimeout(() => {
             inputLocked = false;
             advanceInning();
-          }, 900);
+          }, 2200);
         } else {
           input.focus();
         }
