@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Practice Mode &mdash; Dutch Number Flash Card Exercises</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header>
+    <div class="flag-strip">
+      <span class="red"></span>
+      <span class="white"></span>
+      <span class="blue"></span>
+    </div>
+    <h1>Practice Mode</h1>
+    <p class="subtitle">Dutch Number Flash Card Exercises</p>
+  </header>
+
+  <main>
+
+    <!-- Range selector -->
+    <div class="card">
+      <p class="prompt">Select Which Numbers To Practice</p>
+      <div class="range-buttons">
+        <button class="btn-range" data-min="0"  data-max="9"   onclick="selectRange(this)">0&ndash;9</button>
+        <button class="btn-range" data-min="10" data-max="19"  onclick="selectRange(this)">10&ndash;19</button>
+        <button class="btn-range" data-min="20" data-max="29"  onclick="selectRange(this)">20&ndash;29</button>
+        <button class="btn-range" data-min="30" data-max="39"  onclick="selectRange(this)">30&ndash;39</button>
+        <button class="btn-range" data-min="40" data-max="49"  onclick="selectRange(this)">40&ndash;49</button>
+        <button class="btn-range" data-min="50" data-max="59"  onclick="selectRange(this)">50&ndash;59</button>
+        <button class="btn-range" data-min="60" data-max="69"  onclick="selectRange(this)">60&ndash;69</button>
+        <button class="btn-range" data-min="70" data-max="79"  onclick="selectRange(this)">70&ndash;79</button>
+        <button class="btn-range" data-min="80" data-max="89"  onclick="selectRange(this)">80&ndash;89</button>
+        <button class="btn-range" data-min="90" data-max="100" onclick="selectRange(this)">90&ndash;100</button>
+      </div>
+    </div>
+
+    <!-- Flash card area (hidden until a range is selected) -->
+    <div id="flashcard-area" class="card">
+      <div class="flashcard">
+        <div class="dutch-word" id="dutch-word">---</div>
+        <div class="card-hint">What number is this?</div>
+      </div>
+
+      <div class="answer-area">
+        <input
+          type="number"
+          id="answer-input"
+          class="answer-input"
+          placeholder="?"
+          min="0"
+          max="100"
+          autocomplete="off"
+        />
+        <button class="btn-check" onclick="checkAnswer()" title="Check answer">&#10003;</button>
+      </div>
+
+      <div class="feedback hidden" id="feedback"></div>
+    </div>
+
+  </main>
+
+  <!-- Fixed back button -->
+  <div class="back-btn-wrap">
+    <a href="index.html" class="btn-back">Back to the Beginning</a>
+  </div>
+
+  <script src="js/dutch-numbers.js"></script>
+  <script>
+    let currentNumber = null;
+    let currentMin = null;
+    let currentMax = null;
+
+    function selectRange(btn) {
+      // Update active button styling
+      document.querySelectorAll('.btn-range').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      currentMin = parseInt(btn.dataset.min);
+      currentMax = parseInt(btn.dataset.max);
+
+      // Show the flash card area
+      document.getElementById('flashcard-area').style.display = 'block';
+
+      // Clear previous feedback and input
+      clearFeedback();
+      document.getElementById('answer-input').value = '';
+
+      // Show a new card
+      nextCard();
+    }
+
+    function nextCard() {
+      currentNumber = getRandomNumber(currentMin, currentMax);
+      document.getElementById('dutch-word').textContent = getDutchWord(currentNumber);
+      clearFeedback();
+      const input = document.getElementById('answer-input');
+      input.value = '';
+      input.focus();
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById('answer-input');
+      const userValue = input.value.trim();
+
+      if (userValue === '') return;
+
+      const userNumber = parseInt(userValue, 10);
+      const feedbackEl = document.getElementById('feedback');
+
+      if (userNumber === currentNumber) {
+        feedbackEl.textContent = 'Juist!';
+        feedbackEl.className = 'feedback correct';
+        // Automatically show next card after a short pause
+        setTimeout(() => {
+          nextCard();
+        }, 900);
+      } else {
+        feedbackEl.textContent = 'Onjuist';
+        feedbackEl.className = 'feedback incorrect';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function clearFeedback() {
+      const feedbackEl = document.getElementById('feedback');
+      feedbackEl.textContent = '';
+      feedbackEl.className = 'feedback hidden';
+    }
+
+    // Allow pressing Enter to submit
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('answer-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') checkAnswer();
+      });
+    });
+  </script>
+
+</body>
+</html>
