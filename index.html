@@ -9,6 +9,7 @@
 <body>
 
   <header>
+    <button class="btn-theme" id="theme-btn" onclick="toggleTheme()">Goedemorgen</button>
     <div class="flag-strip">
       <span class="red"></span>
       <span class="white"></span>
@@ -28,5 +29,24 @@
     </div>
   </main>
 
+  <script>
+    (function () {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+      }
+    })();
+
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-btn').textContent = isDark ? 'Goedeavond' : 'Goedemorgen';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.getElementById('theme-btn').textContent = 'Goedeavond';
+      }
+    });
+  </script>
 </body>
 </html>

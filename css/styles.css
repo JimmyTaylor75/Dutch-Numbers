@@ -370,6 +370,113 @@ main {
   font-size: 1.05rem;
 }
 
+/* ── Theme toggle button ── */
+header {
+  position: relative;
+}
+
+.btn-theme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--white);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+.btn-theme:hover {
+  background: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Dark mode ── */
+body.dark {
+  background: linear-gradient(135deg, #0f1117 0%, #1a1f2e 100%);
+  color: #e2e8f0;
+}
+
+body.dark .card {
+  background: #1e2336;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .prompt {
+  color: #7ba7f7;
+}
+
+body.dark .btn-range {
+  background: #252c42;
+  border-color: #374060;
+  color: #7ba7f7;
+}
+
+body.dark .btn-range:hover,
+body.dark .btn-range.active {
+  background: var(--dutch-blue-light);
+  color: var(--white);
+  border-color: var(--dutch-blue-light);
+}
+
+body.dark .answer-input {
+  background: #252c42;
+  border-color: #374060;
+  color: #e2e8f0;
+}
+
+body.dark .answer-input:focus {
+  border-color: #7ba7f7;
+}
+
+body.dark .score-label {
+  color: #94a3b8;
+}
+
+body.dark .score-divider {
+  background: #374060;
+}
+
+body.dark .btn-reset {
+  border-color: #374060;
+  color: #94a3b8;
+}
+
+body.dark .btn-reset:hover {
+  border-color: var(--danger-red);
+  color: var(--danger-red);
+}
+
+body.dark .back-btn-wrap {
+  background: linear-gradient(to top, rgba(15, 17, 23, 0.98) 80%, transparent);
+}
+
+body.dark .btn-back {
+  background: #252c42;
+  border-color: #374060;
+  color: #94a3b8;
+}
+
+body.dark .btn-back:hover {
+  background: var(--dutch-blue-light);
+  border-color: var(--dutch-blue-light);
+  color: var(--white);
+}
+
+body.dark .coming-soon h2 {
+  color: #7ba7f7;
+}
+
+body.dark .coming-soon p {
+  color: #94a3b8;
+}
+
 /* ── Responsive ── */
 @media (max-width: 480px) {
   .mode-buttons {
