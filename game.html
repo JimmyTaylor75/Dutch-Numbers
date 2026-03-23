@@ -210,24 +210,16 @@
   <script src="js/dutch-numbers.js"></script>
 
   <script>
-    const INNINGS_CONFIG = [
-      { min: 0,  max: 9  },   // 1st
-      { min: 10, max: 19 },   // 2nd
-      { min: 20, max: 29 },   // 3rd
-      { min: 30, max: 39 },   // 4th
-      { min: 40, max: 49 },   // 5th
-      { min: 50, max: 59 },   // 6th
-      { min: 60, max: 69 },   // 7th
-      { min: 70, max: 79 },   // 8th
-      { min: 80, max: 99 },   // 9th
-    ];
+    const TOTAL_INNINGS   = 9;
+    const CORRECT_TO_WIN  = 10;   // correct answers needed to end an inning
 
-    let currentInning = 0;
-    let strikes       = 0;
-    let runs          = 0;
-    let queue         = [];
-    let currentNumber = null;
-    let inputLocked   = false;
+    let currentInning    = 0;
+    let strikes          = 0;
+    let runs             = 0;
+    let inningCorrect    = 0;     // correct answers this inning
+    let masterQueue      = [];    // shuffled 0-100, shared across all innings
+    let currentNumber    = null;
+    let inputLocked      = false;
 
     // Fisher-Yates shuffle
     function shuffle(arr) {
@@ -238,27 +230,24 @@
       return arr;
     }
 
-    function buildQueue(min, max) {
+    function buildMasterQueue() {
       const nums = [];
-      for (let i = min; i <= max; i++) nums.push(i);
+      for (let i = 0; i <= 100; i++) nums.push(i);
       return shuffle(nums);
     }
 
     function startInning(idx) {
       currentInning = idx;
       strikes       = 0;
+      inningCorrect = 0;
       inputLocked   = false;
       updateScoreboard();
-      queue = buildQueue(INNINGS_CONFIG[idx].min, INNINGS_CONFIG[idx].max);
       nextNumber();
     }
 
     function nextNumber() {
-      if (queue.length === 0) {
-        advanceInning();
-        return;
-      }
-      currentNumber = queue.shift();
+      // masterQueue always has numbers left (101 numbers, max 90 used across 9 innings)
+      currentNumber = masterQueue.shift();
       document.getElementById('game-dutch-word').textContent = getDutchWord(currentNumber);
       clearFeedback();
       const input = document.getElementById('game-input');
@@ -285,14 +274,22 @@
 
       if (num === currentNumber) {
         runs++;
+        inningCorrect++;
         updateScoreboard();
         feedbackEl.textContent = 'Juist!';
         feedbackEl.className   = 'feedback correct';
         inputLocked = true;
-        setTimeout(() => {
-          inputLocked = false;
-          nextNumber();
-        }, 800);
+        if (inningCorrect >= CORRECT_TO_WIN) {
+          setTimeout(() => {
+            inputLocked = false;
+            advanceInning();
+          }, 900);
+        } else {
+          setTimeout(() => {
+            inputLocked = false;
+            nextNumber();
+          }, 800);
+        }
       } else {
         strikes++;
         updateScoreboard();
@@ -312,7 +309,7 @@
     }
 
     function advanceInning() {
-      if (currentInning >= INNINGS_CONFIG.length - 1) {
+      if (currentInning >= TOTAL_INNINGS - 1) {
         showGameOver();
         return;
       }
@@ -338,7 +335,8 @@
     }
 
     function restartGame() {
-      runs = 0;
+      runs        = 0;
+      masterQueue = buildMasterQueue();
       document.getElementById('game-over-overlay').classList.add('hidden');
       document.getElementById('game-answer-area').style.display = '';
       document.getElementById('mound-card').style.visibility    = '';
@@ -355,6 +353,7 @@
       document.getElementById('game-input').addEventListener('keydown', e => {
         if (e.key === 'Enter') checkGameAnswer();
       });
+      masterQueue = buildMasterQueue();
       startInning(0);
     });
   </script>
