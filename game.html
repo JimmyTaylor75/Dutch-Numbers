@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Mode &mdash; Dutch Number Flash Card Exercises</title>
+  <title>Dutch Numbers Baseball</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -15,16 +15,174 @@
       <span class="white"></span>
       <span class="blue"></span>
     </div>
-    <h1>Game Mode</h1>
-    <p class="subtitle">Dutch Number Flash Card Exercises</p>
+    <h1>Dutch Numbers Baseball</h1>
+    <p class="subtitle">Batter Up! &mdash; Dutch Number Flash Card Exercises</p>
   </header>
 
   <main>
-    <div class="card coming-soon">
-      <div class="icon">&#127918;</div>
-      <h2>Coming Soon!</h2>
-      <p>Game Mode is under construction. Check back soon for a fun timed challenge!</p>
+
+    <!-- Scoreboard -->
+    <div class="baseball-scoreboard">
+      <div class="sb-section">
+        <div class="sb-label">Inning</div>
+        <div class="sb-value" id="sb-inning">1</div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">Strikes</div>
+        <div class="strikes-display">
+          <span class="strike-x" id="strike-1">&#10005;</span>
+          <span class="strike-x" id="strike-2">&#10005;</span>
+          <span class="strike-x" id="strike-3">&#10005;</span>
+        </div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">Runs</div>
+        <div class="sb-value" id="sb-runs">0</div>
+      </div>
     </div>
+
+    <!-- Baseball Diamond -->
+    <div class="diamond-wrapper">
+      <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-label="Baseball diamond">
+        <defs>
+          <radialGradient id="lightGlowGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#fffbe0" stop-opacity="0.95"/>
+            <stop offset="45%"  stop-color="#fff8a0" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#fffacd" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="fieldLightGrad" cx="50%" cy="60%" r="55%">
+            <stop offset="0%"   stop-color="#c8ffb0" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#c8ffb0" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- Outfield grass -->
+        <rect x="0" y="0" width="500" height="500" class="field-outfield"/>
+
+        <!-- Foul lines -->
+        <line x1="250" y1="460" x2="460" y2="250" stroke="white" stroke-width="1.5" opacity="0.45"/>
+        <line x1="250" y1="460" x2="40"  y2="250" stroke="white" stroke-width="1.5" opacity="0.45"/>
+
+        <!-- Infield dirt -->
+        <polygon points="250,460 460,250 250,40 40,250" class="field-dirt"/>
+
+        <!-- Pitcher's mound -->
+        <ellipse cx="250" cy="300" rx="33" ry="25" class="field-mound"/>
+        <!-- Rubber -->
+        <rect x="242" y="296" width="16" height="5" rx="1" fill="white"/>
+
+        <!-- 2nd base (top) -->
+        <rect x="238" y="28" width="24" height="24" rx="2" fill="white" transform="rotate(45,250,40)"/>
+        <!-- 1st base (right) -->
+        <rect x="448" y="238" width="24" height="24" rx="2" fill="white" transform="rotate(45,460,250)"/>
+        <!-- 3rd base (left) -->
+        <rect x="28"  y="238" width="24" height="24" rx="2" fill="white" transform="rotate(45,40,250)"/>
+        <!-- Home plate -->
+        <polygon points="250,480 236,467 236,452 264,452 264,467" fill="white"/>
+
+        <!-- Batter's boxes -->
+        <rect x="206" y="448" width="14" height="32" fill="none" stroke="white" stroke-width="1.5" opacity="0.5"/>
+        <rect x="280" y="448" width="14" height="32" fill="none" stroke="white" stroke-width="1.5" opacity="0.5"/>
+        <!-- Catcher's box -->
+        <rect x="228" y="481" width="44" height="16" fill="none" stroke="white" stroke-width="1.5" opacity="0.4"/>
+
+        <!-- ═══ Stadium Light Poles ═══ -->
+
+        <!-- Left Field -->
+        <g>
+          <rect x="27"  y="96"  width="6" height="92" rx="1" fill="#5a5a5a"/>
+          <rect x="13"  y="92"  width="32" height="5" rx="1" fill="#5a5a5a"/>
+          <!-- crossarm braces -->
+          <line x1="30" y1="96" x2="14"  y2="92" stroke="#4a4a4a" stroke-width="2"/>
+          <line x1="30" y1="96" x2="44"  y2="92" stroke="#4a4a4a" stroke-width="2"/>
+          <!-- fixtures -->
+          <rect x="11"  y="82"  width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="22"  y="82"  width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="33"  y="82"  width="10" height="10" rx="2" class="light-fixture"/>
+          <!-- glow -->
+          <circle cx="30" cy="87" r="45" fill="url(#lightGlowGrad)" class="light-glow"/>
+        </g>
+
+        <!-- Left-Center -->
+        <g>
+          <rect x="148" y="20"  width="6" height="68" rx="1" fill="#5a5a5a"/>
+          <rect x="134" y="16"  width="32" height="5" rx="1" fill="#5a5a5a"/>
+          <line x1="151" y1="20" x2="135" y2="16" stroke="#4a4a4a" stroke-width="2"/>
+          <line x1="151" y1="20" x2="165" y2="16" stroke="#4a4a4a" stroke-width="2"/>
+          <rect x="132" y="5"   width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="143" y="5"   width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="154" y="5"   width="10" height="10" rx="2" class="light-fixture"/>
+          <circle cx="150" cy="10" r="45" fill="url(#lightGlowGrad)" class="light-glow"/>
+        </g>
+
+        <!-- Right-Center -->
+        <g>
+          <rect x="346" y="20"  width="6" height="68" rx="1" fill="#5a5a5a"/>
+          <rect x="334" y="16"  width="32" height="5" rx="1" fill="#5a5a5a"/>
+          <line x1="349" y1="20" x2="335" y2="16" stroke="#4a4a4a" stroke-width="2"/>
+          <line x1="349" y1="20" x2="365" y2="16" stroke="#4a4a4a" stroke-width="2"/>
+          <rect x="332" y="5"   width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="343" y="5"   width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="354" y="5"   width="10" height="10" rx="2" class="light-fixture"/>
+          <circle cx="350" cy="10" r="45" fill="url(#lightGlowGrad)" class="light-glow"/>
+        </g>
+
+        <!-- Right Field -->
+        <g>
+          <rect x="467" y="96"  width="6" height="92" rx="1" fill="#5a5a5a"/>
+          <rect x="455" y="92"  width="32" height="5" rx="1" fill="#5a5a5a"/>
+          <line x1="470" y1="96" x2="456" y2="92" stroke="#4a4a4a" stroke-width="2"/>
+          <line x1="470" y1="96" x2="486" y2="92" stroke="#4a4a4a" stroke-width="2"/>
+          <rect x="453" y="82"  width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="464" y="82"  width="10" height="10" rx="2" class="light-fixture"/>
+          <rect x="475" y="82"  width="10" height="10" rx="2" class="light-fixture"/>
+          <circle cx="470" cy="87" r="45" fill="url(#lightGlowGrad)" class="light-glow"/>
+        </g>
+
+        <!-- Field lighting overlay (dark mode only) -->
+        <rect x="0" y="0" width="500" height="500" fill="url(#fieldLightGrad)" class="field-light-overlay"/>
+      </svg>
+
+      <!-- Flash card overlaid on pitcher's mound -->
+      <div class="mound-card" id="mound-card">
+        <div class="mound-word" id="game-dutch-word">---</div>
+        <div class="mound-hint">What number?</div>
+      </div>
+    </div>
+
+    <!-- Answer input -->
+    <div class="game-answer-area" id="game-answer-area">
+      <input
+        type="number"
+        id="game-input"
+        class="answer-input"
+        placeholder="?"
+        min="0"
+        max="99"
+        autocomplete="off"
+      />
+      <button class="btn-check" onclick="checkGameAnswer()" title="Check answer">&#10003;</button>
+    </div>
+
+    <div class="feedback hidden" id="game-feedback"></div>
+
+    <!-- Inning transition overlay -->
+    <div class="inning-overlay hidden" id="inning-overlay">
+      <div class="inning-announce" id="inning-announce">&#9918; Inning 2</div>
+    </div>
+
+    <!-- Game over overlay -->
+    <div class="game-over-overlay hidden" id="game-over-overlay">
+      <div class="game-over-card">
+        <div class="game-over-icon">&#9918;</div>
+        <div class="game-over-title">Game Over!</div>
+        <div class="game-over-score">Final Score: <span id="final-runs">0</span> Runs</div>
+        <button class="btn-mode" onclick="restartGame()">Play Again</button>
+      </div>
+    </div>
+
   </main>
 
   <!-- Fixed back button -->
@@ -33,23 +191,173 @@
   </div>
 
   <script>
+    // ── Theme ──
     (function () {
-      if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark');
-      }
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
     })();
-
     function toggleTheme() {
       const isDark = document.body.classList.toggle('dark');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
       document.getElementById('theme-btn').textContent = isDark ? 'Goedeavond' : 'Goedemorgen';
     }
-
     document.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem('theme') === 'dark') {
         document.getElementById('theme-btn').textContent = 'Goedeavond';
       }
     });
   </script>
+
+  <script src="js/dutch-numbers.js"></script>
+
+  <script>
+    const INNINGS_CONFIG = [
+      { min: 0,  max: 9  },   // 1st
+      { min: 10, max: 19 },   // 2nd
+      { min: 20, max: 29 },   // 3rd
+      { min: 30, max: 39 },   // 4th
+      { min: 40, max: 49 },   // 5th
+      { min: 50, max: 59 },   // 6th
+      { min: 60, max: 69 },   // 7th
+      { min: 70, max: 79 },   // 8th
+      { min: 80, max: 99 },   // 9th
+    ];
+
+    let currentInning = 0;
+    let strikes       = 0;
+    let runs          = 0;
+    let queue         = [];
+    let currentNumber = null;
+    let inputLocked   = false;
+
+    // Fisher-Yates shuffle
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function buildQueue(min, max) {
+      const nums = [];
+      for (let i = min; i <= max; i++) nums.push(i);
+      return shuffle(nums);
+    }
+
+    function startInning(idx) {
+      currentInning = idx;
+      strikes       = 0;
+      inputLocked   = false;
+      updateScoreboard();
+      queue = buildQueue(INNINGS_CONFIG[idx].min, INNINGS_CONFIG[idx].max);
+      nextNumber();
+    }
+
+    function nextNumber() {
+      if (queue.length === 0) {
+        advanceInning();
+        return;
+      }
+      currentNumber = queue.shift();
+      document.getElementById('game-dutch-word').textContent = getDutchWord(currentNumber);
+      clearFeedback();
+      const input = document.getElementById('game-input');
+      input.value = '';
+      if (!inputLocked) input.focus();
+    }
+
+    function updateScoreboard() {
+      document.getElementById('sb-inning').textContent = currentInning + 1;
+      document.getElementById('sb-runs').textContent   = runs;
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('strike-' + i).classList.toggle('active', i <= strikes);
+      }
+    }
+
+    function checkGameAnswer() {
+      if (inputLocked) return;
+      const input = document.getElementById('game-input');
+      const val   = input.value.trim();
+      if (val === '') return;
+
+      const num       = parseInt(val, 10);
+      const feedbackEl = document.getElementById('game-feedback');
+
+      if (num === currentNumber) {
+        runs++;
+        updateScoreboard();
+        feedbackEl.textContent = 'Juist!';
+        feedbackEl.className   = 'feedback correct';
+        inputLocked = true;
+        setTimeout(() => {
+          inputLocked = false;
+          nextNumber();
+        }, 800);
+      } else {
+        strikes++;
+        updateScoreboard();
+        feedbackEl.textContent = 'Onjuist';
+        feedbackEl.className   = 'feedback incorrect';
+        input.value = '';
+        if (strikes >= 3) {
+          inputLocked = true;
+          setTimeout(() => {
+            inputLocked = false;
+            advanceInning();
+          }, 900);
+        } else {
+          input.focus();
+        }
+      }
+    }
+
+    function advanceInning() {
+      if (currentInning >= INNINGS_CONFIG.length - 1) {
+        showGameOver();
+        return;
+      }
+      const nextIdx = currentInning + 1;
+      showInningBanner(nextIdx + 1, () => startInning(nextIdx));
+    }
+
+    function showInningBanner(num, cb) {
+      const overlay = document.getElementById('inning-overlay');
+      document.getElementById('inning-announce').textContent = '\u26BE Inning ' + num;
+      overlay.classList.remove('hidden');
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+        cb();
+      }, 1800);
+    }
+
+    function showGameOver() {
+      document.getElementById('game-over-overlay').classList.remove('hidden');
+      document.getElementById('final-runs').textContent = runs;
+      document.getElementById('game-answer-area').style.display = 'none';
+      document.getElementById('mound-card').style.visibility    = 'hidden';
+    }
+
+    function restartGame() {
+      runs = 0;
+      document.getElementById('game-over-overlay').classList.add('hidden');
+      document.getElementById('game-answer-area').style.display = '';
+      document.getElementById('mound-card').style.visibility    = '';
+      startInning(0);
+    }
+
+    function clearFeedback() {
+      const el = document.getElementById('game-feedback');
+      el.textContent = '';
+      el.className   = 'feedback hidden';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('game-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter') checkGameAnswer();
+      });
+      startInning(0);
+    });
+  </script>
+
 </body>
 </html>

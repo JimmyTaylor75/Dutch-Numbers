@@ -477,6 +477,210 @@ body.dark .coming-soon p {
   color: #94a3b8;
 }
 
+/* ── Baseball Scoreboard ── */
+.baseball-scoreboard {
+  background: #0d0d0d;
+  border: 3px solid #222;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 1px 0 #2a2a2a;
+}
+
+.sb-section {
+  text-align: center;
+  flex: 1;
+}
+
+.sb-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #666;
+  margin-bottom: 0.4rem;
+}
+
+.sb-value {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #f0c040;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  line-height: 1;
+  text-shadow: 0 0 14px rgba(240, 192, 64, 0.45);
+}
+
+.sb-divider {
+  width: 1px;
+  height: 60px;
+  background: #2a2a2a;
+  flex-shrink: 0;
+}
+
+.strikes-display {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.3rem 0;
+}
+
+.strike-x {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: #333;
+  line-height: 1;
+  transition: color 0.2s, text-shadow 0.2s;
+  font-family: 'Courier New', monospace;
+}
+
+.strike-x.active {
+  color: #dc3545;
+  text-shadow: 0 0 12px rgba(220, 53, 69, 0.55);
+}
+
+/* ── Diamond wrapper ── */
+.diamond-wrapper {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 0.25rem;
+}
+
+.diamond-wrapper svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+}
+
+/* SVG field element default colors */
+.field-outfield      { fill: #2e7d32; }
+.field-dirt          { fill: #c8956c; }
+.field-mound         { fill: #b87a56; }
+
+/* Stadium lights — off in light mode */
+.light-glow          { opacity: 0;    transition: opacity 0.5s; }
+.light-fixture       { fill: #666;    transition: fill 0.5s; }
+.field-light-overlay { opacity: 0;    transition: opacity 0.5s; }
+
+/* Stadium lights — on in dark mode */
+body.dark .light-glow          { opacity: 1; }
+body.dark .light-fixture       { fill: #fffacd; }
+body.dark .field-light-overlay { opacity: 1; }
+body.dark .field-outfield      { fill: #357a3a; }
+body.dark .field-dirt          { fill: #b8855c; }
+
+/* ── Mound flashcard overlay ── */
+.mound-card {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: var(--radius);
+  padding: 0.45rem 1rem;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.35);
+  text-align: center;
+  min-width: 115px;
+  max-width: 195px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.mound-word {
+  font-size: clamp(0.9rem, 3.5vw, 1.45rem);
+  font-weight: 700;
+  color: var(--dutch-blue);
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.mound-hint {
+  font-size: 0.62rem;
+  color: var(--medium-gray);
+  margin-top: 0.15rem;
+}
+
+body.dark .mound-card { background: #1e2336; }
+body.dark .mound-word { color: #7ba7f7; }
+body.dark .mound-hint { color: #64748b; }
+
+/* ── Game answer area ── */
+.game-answer-area {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0.6rem 0 0.4rem;
+}
+
+/* ── Inning transition overlay ── */
+.inning-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.inning-overlay.hidden { display: none; }
+
+.inning-announce {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 900;
+  color: white;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 35px var(--dutch-orange), 0 2px 10px rgba(0,0,0,0.6);
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Game over overlay ── */
+.game-over-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.84);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.game-over-overlay.hidden { display: none; }
+
+.game-over-card {
+  background: #12161f;
+  border: 2px solid #2a3050;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2.5rem;
+  text-align: center;
+  color: white;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.game-over-icon  { font-size: 3.5rem; margin-bottom: 0.4rem; }
+
+.game-over-title {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--dutch-orange);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.5px;
+}
+
+.game-over-score {
+  font-size: 1.4rem;
+  color: #f0c040;
+  margin-bottom: 2rem;
+}
+
 /* ── Responsive ── */
 @media (max-width: 480px) {
   .mode-buttons {
