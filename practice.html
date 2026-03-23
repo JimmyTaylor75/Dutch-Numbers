@@ -37,6 +37,20 @@
       </div>
     </div>
 
+    <!-- Scoreboard -->
+    <div class="card scoreboard">
+      <div class="score-item correct-score">
+        <span class="score-label">Correct</span>
+        <span class="score-value" id="score-correct">0</span>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-item incorrect-score">
+        <span class="score-label">Incorrect</span>
+        <span class="score-value" id="score-incorrect">0</span>
+      </div>
+      <button class="btn-reset" onclick="resetScore()" title="Reset score">&#8635; Reset</button>
+    </div>
+
     <!-- Flash card area (hidden until a range is selected) -->
     <div id="flashcard-area" class="card">
       <div class="flashcard">
@@ -72,6 +86,19 @@
     let currentNumber = null;
     let currentMin = null;
     let currentMax = null;
+    let scoreCorrect = 0;
+    let scoreIncorrect = 0;
+
+    function updateScoreboard() {
+      document.getElementById('score-correct').textContent = scoreCorrect;
+      document.getElementById('score-incorrect').textContent = scoreIncorrect;
+    }
+
+    function resetScore() {
+      scoreCorrect = 0;
+      scoreIncorrect = 0;
+      updateScoreboard();
+    }
 
     function selectRange(btn) {
       // Update active button styling
@@ -111,6 +138,8 @@
       const feedbackEl = document.getElementById('feedback');
 
       if (userNumber === currentNumber) {
+        scoreCorrect++;
+        updateScoreboard();
         feedbackEl.textContent = 'Juist!';
         feedbackEl.className = 'feedback correct';
         // Automatically show next card after a short pause
@@ -118,6 +147,8 @@
           nextCard();
         }, 900);
       } else {
+        scoreIncorrect++;
+        updateScoreboard();
         feedbackEl.textContent = 'Onjuist';
         feedbackEl.className = 'feedback incorrect';
         input.value = '';

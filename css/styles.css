@@ -290,6 +290,64 @@ main {
   box-shadow: var(--shadow);
 }
 
+/* ── Scoreboard ── */
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 80px;
+}
+
+.score-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--medium-gray);
+}
+
+.score-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.correct-score .score-value  { color: var(--success-green); }
+.incorrect-score .score-value { color: var(--danger-red); }
+
+.score-divider {
+  width: 1px;
+  height: 50px;
+  background: var(--light-gray);
+}
+
+.btn-reset {
+  margin-left: 0.5rem;
+  background: none;
+  border: 2px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--medium-gray);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-reset:hover {
+  border-color: var(--danger-red);
+  color: var(--danger-red);
+}
+
 /* ── Game mode placeholder ── */
 .coming-soon {
   text-align: center;
